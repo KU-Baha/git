@@ -1,0 +1,4 @@
+.idea/
+venv/
+.zeon_git/
+__pycache__/
