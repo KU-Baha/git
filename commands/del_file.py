@@ -1,46 +1,36 @@
-# import os
-# import sys
-#
-#
-# # from helper.helper import del_file
-#
-#
-# def del_file(dir_path, *args) -> bool:
-#
-#     file_path = f"{dir_path}/{BASE_FS_PATH}/{args[0]}"
-#     database = database_list()
-#     data = get_data_by_key(file_path, database)
-#
-#     if not data:
-#         print("File not found!")
-#         return False
-#
-#     file_name = data.get('file_name')
-#     file_hash = data.get('file_hash')
-#
-#     if not check_file(file_path):
-#         if not Path(file_path).is_dir():
-#             print("File not found!")
-#             return False
-#
-#         shutil.rmtree(Path(file_path), ignore_errors=True)
-#         print("The directory has been deleted")
-#         return True
-#
-#     if not delete_from_database(file_hash, file_name, database):
-#         print("File not found in database!")
-#         return False
-#
-#     os.remove(file_path)
-#     print("The file has been deleted")
-#     return True
-#
-#
-# def del_file_helper(*args):
-#     if len(args) != 1:
-#         print("Command 'del' take 1 argument - file path!")
-#         return False
-#
-#
-# if __name__ == '__main__':
-#     main()
+import os
+import sys
+
+from commands.utils.config import FS_OBJECTS
+from commands.utils.database_helper import *
+
+
+def del_file(file_path: str):
+    os.remove(file_path)
+
+
+def del_file_helper(*args):
+    if len(args) != 1:
+        print("Command 'del' take 1 argument - file path!")
+        return False
+
+    file_path = args[0]
+
+    database = database_list()
+
+    if not check_in_database(file_path, database):
+        print('File not found in database!')
+        return False
+
+    d_file_hash, d_file_path = delete_from_database(file_path, database)
+
+    if not get_data_by_key(d_file_hash, database):
+        file_path_in_fs = os.path.join(FS_OBJECTS, d_file_hash)
+        del_file(file_path_in_fs)
+
+    print('Success deleted!')
+
+
+if __name__ == '__main__':
+    _, *args = sys.argv
+    del_file_helper(*args)

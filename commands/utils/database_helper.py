@@ -35,21 +35,14 @@ def get_data_by_key(key: str, database: list) -> dict:
     return {}
 
 
-def check_in_database(path: str, database: list):
-    for line in database:
-        lines = line.split('/')
-        paths = path.split('/')
-        if path in line:
+def check_in_database(path: str, database: list) -> tuple:
+    for index, line in enumerate(database[:-1]):
+        line = line.split(',')
 
-            if len(lines) != 2 and len(paths) != 1:
-                return True
+        if path.lstrip('/') == line[1].lstrip('/'):
+            return index, line
 
-            if path in line:
-                return True
-
-            continue
-
-    return False
+    return ()
 
 
 def add_to_database(new_file_hash: str, new_file_path: str, database: list) -> bool:
@@ -58,24 +51,20 @@ def add_to_database(new_file_hash: str, new_file_path: str, database: list) -> b
 
     with open(DATABASE_PATH, 'w') as file:
         file.write('\n'.join(database))
-        file.write(f"{new_file_hash}, /{new_file_path}\n")
+        file.write(f"{new_file_hash},/{new_file_path}\n")
 
     return True
 
 
-def delete_from_database(file_hash: str, file_name: str, database: list) -> bool:
-    if not get_data_by_key(file_hash, database):
-        return False
+def delete_from_database(file_path: str, database: list) -> tuple:
+    data = check_in_database(file_path, database)
 
-    for i in range(len(database)):
-        if file_hash not in database[i] or file_name not in database[i]:
-            continue
+    if not data:
+        return ()
 
-        del database[i]
+    del database[data[0]]
 
-        with open(DATABASE_PATH, 'w') as file:
-            file.write('\n'.join(database))
+    with open(DATABASE_PATH, 'w') as file:
+        file.write('\n'.join(database))
 
-        return True
-
-    return False
+    return data[1]

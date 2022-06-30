@@ -3,9 +3,9 @@ from pathlib import Path
 import os
 import shutil
 
-from utils.config import *
-from utils.database_helper import hash_file, add_to_database, database_list
-from utils.fs_helper import check_file
+from commands.utils.config import FS_OBJECTS
+from commands.utils.database_helper import hash_file, add_to_database, database_list
+from commands.utils.fs_helper import check_file
 
 
 def add_file(file_from: str, file_hash: str):
@@ -33,7 +33,12 @@ def add_file_helper(*args) -> bool:
     new_file_path = file_name
 
     if len(args) == 2:
-        new_file_path = args[1].lstrip('/')
+        file_to = args[1]
+
+        new_file_path = file_to.lstrip('/')
+
+        if not new_file_path:
+            new_file_path = '/'
 
         if new_file_path[-1] == '/':
             new_file_path = new_file_path + file_name

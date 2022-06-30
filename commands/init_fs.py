@@ -2,7 +2,7 @@ import sys
 from pathlib import Path
 import os
 
-from utils.config import *
+from commands.utils.config import *
 
 
 def init_fs(called_path: str) -> None:
