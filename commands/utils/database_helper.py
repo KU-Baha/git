@@ -68,3 +68,12 @@ def delete_from_database(file_path: str, database: list) -> tuple:
         file.write('\n'.join(database))
 
     return data[1]
+
+
+def get_path(database: list) -> list:
+    paths = []
+
+    for line in database:
+        paths.append(line.split(',')[1])
+
+    return paths

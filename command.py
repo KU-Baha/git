@@ -1,8 +1,8 @@
-from commands import add_file, init_fs, del_file
+from commands import add_file, init_fs, del_file, list_files
 
 commands_list = {
     'init': init_fs.init_fs_helper,
-    # 'list': file_list,
+    'list': list_files.list_file,
     'add': add_file.add_file_helper,
     'del': del_file.del_file_helper
 }
