@@ -20,7 +20,6 @@ def database_list() -> list:
         return file.read().split('\n')
 
 
-# Нужно переписать
 def get_data_by_key(key: str, database: list) -> dict:
     for line in database:
         if key not in line:
@@ -28,7 +27,10 @@ def get_data_by_key(key: str, database: list) -> dict:
 
         data = line.split(',')
 
-        return {'file_hash': data[0], 'file_path': data[1]}
+        if check_in_database(data[1], database):
+            return {'file_hash': data[0], 'file_path': data[1]}
+
+        continue
 
     return {}
 

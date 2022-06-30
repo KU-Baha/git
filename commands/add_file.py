@@ -28,8 +28,6 @@ def add_file_helper(*args) -> bool:
 
     database = database_list()
 
-    # Check in database before adding to FS
-
     file_name = Path(file_path).name
     file_hash = hash_file(file_path)
     new_file_path = file_name
