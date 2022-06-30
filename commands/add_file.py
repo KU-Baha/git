@@ -30,9 +30,9 @@ def add_file_helper(*args) -> bool:
 
     # Check in database before adding to FS
 
-    new_file_path = os.path.join(called_path, file_path).lstrip('/')
-    file_name = Path(new_file_path).name
+    file_name = Path(file_path).name
     file_hash = hash_file(file_path)
+    new_file_path = file_name
 
     if len(args) == 2:
         new_file_path = args[1].lstrip('/')

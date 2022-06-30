@@ -36,15 +36,16 @@ def get_data_by_key(key: str, database: list) -> dict:
 def check_in_database(path: str, database: list):
     for line in database:
         lines = line.split('/')
+        paths = path.split('/')
         if path in line:
-            if len(lines) == 2:
 
-                if path == lines[1]:
-                    return True
+            if len(lines) != 2 and len(paths) != 1:
+                return True
 
-                continue
+            if path in line:
+                return True
 
-            return True
+            continue
 
     return False
 
