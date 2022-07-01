@@ -38,8 +38,9 @@ def get_data_by_key(key: str, database: list) -> dict:
 def check_in_database(path: str, database: list) -> tuple:
     for index, line in enumerate(database[:-1]):
         line = line.split(',')
-
-        if path.lstrip('/') == line[1].lstrip('/'):
+        path_in_data = line[1].lstrip('/')
+        new_path = path.lstrip('/')
+        if new_path == path_in_data:
             return index, line
 
     return ()
@@ -51,7 +52,7 @@ def add_to_database(new_file_hash: str, new_file_path: str, database: list) -> b
 
     with open(DATABASE_PATH, 'w') as file:
         file.write('\n'.join(database))
-        file.write(f"{new_file_hash},/{new_file_path}\n")
+        file.write(f"{new_file_hash},/{new_file_path.lstrip('/')}\n")
 
     return True
 

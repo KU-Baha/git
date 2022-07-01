@@ -1,6 +1,8 @@
 import os
 from pathlib import Path
 
+from commands.utils.config import BASE_FS_PATH
+
 
 def check_file(file_path: str) -> bool:
     """
@@ -20,3 +22,10 @@ def check_file(file_path: str) -> bool:
         return True
 
     return False
+
+
+def check_inited():
+    if not Path(BASE_FS_PATH).is_dir():
+        return False
+
+    return True

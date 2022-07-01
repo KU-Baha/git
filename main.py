@@ -1,7 +1,6 @@
 import os
 import sys
 from command import commands_list
-# from helper.helper import check_init
 
 
 def main():

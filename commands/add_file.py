@@ -5,7 +5,8 @@ import shutil
 
 from commands.utils.config import FS_OBJECTS
 from commands.utils.database_helper import hash_file, add_to_database, database_list
-from commands.utils.fs_helper import check_file
+from commands.utils.fs_helper import check_file, check_inited
+from commands.list_files import list_file_helper
 
 
 def add_file(file_from: str, file_hash: str):
@@ -17,6 +18,10 @@ def add_file(file_from: str, file_hash: str):
 def add_file_helper(*args) -> bool:
     if len(args) == 0 or len(args) > 2:
         print("Command 'add' take 1 or 2 argument - file path, new file path!")
+        return False
+
+    if not check_inited():
+        print('FS not initiazlized!')
         return False
 
     called_path = os.getcwd()
@@ -55,6 +60,7 @@ def add_file_helper(*args) -> bool:
     add_file(file_path, file_hash)
     print('Success added to FS!')
 
+    list_file_helper()
     return True
 
 
