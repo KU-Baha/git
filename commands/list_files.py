@@ -32,7 +32,8 @@ def get_tree_dict(paths: list) -> dict:
 
 def to_tree(d, c=0):
     for a, b in d.items():
-        yield '   '.join('|' for _ in range(c + 1)) + f'---{a}/'
+        yield '   '.join('|' for _ in range(c + 1)) + f'---{a}/' if b != {} \
+            else '   '.join('|' for _ in range(c + 1)) + f'---{a}'
         yield from ([] if b is None else to_tree(b, c + 1))
 
 

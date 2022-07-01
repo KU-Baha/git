@@ -38,8 +38,14 @@ def get_data_by_key(key: str, database: list) -> dict:
 def check_in_database(path: str, database: list) -> tuple:
     for index, line in enumerate(database[:-1]):
         line = line.split(',')
+        path_in_database_split = line[1].split('/')[1:]
+        path_split = path.split('/')
+        if path_in_database_split == path_split[:len(path_in_database_split)]:
+            return index, line
+
         path_in_data = line[1].lstrip('/')
         new_path = path.lstrip('/')
+
         if new_path == path_in_data:
             return index, line
 
