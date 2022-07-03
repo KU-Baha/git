@@ -1,5 +1,3 @@
-import os
-
 from commands.utils.database_helper import database_list, get_path
 from commands.utils.config import LIST_FILE_PATH
 from commands.utils.fs_helper import check_inited
@@ -9,6 +7,7 @@ def list_file(*args):
     if args:
         print("Command list doesn't take any arguments!")
         exit()
+
     with open(LIST_FILE_PATH, 'r') as file:
         print(file.read())
 
@@ -32,7 +31,7 @@ def get_tree_dict(paths: list) -> dict:
 
 def to_tree(d, c=0):
     for a, b in d.items():
-        yield '   '.join('|' for _ in range(c + 1)) + f'---{a}/' if b != {} \
+        yield '   '.join('|' for _ in range(c + 1)) + f'[{len(b)}]---{a}/' if b != {} \
             else '   '.join('|' for _ in range(c + 1)) + f'---{a}'
         yield from ([] if b is None else to_tree(b, c + 1))
 
