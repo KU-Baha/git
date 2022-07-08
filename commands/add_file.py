@@ -7,6 +7,7 @@ from commands.utils.config import FS_OBJECTS
 from commands.utils.database_helper import hash_file, add_to_database, database_list
 from commands.utils.fs_helper import check_file, check_inited
 from commands.list_files import list_file_helper
+from commands.utils.hook_helper import run_hooks
 
 
 def add_file(file_from: str, file_hash: str):
@@ -16,6 +17,9 @@ def add_file(file_from: str, file_hash: str):
 
 
 def add_file_helper(*args) -> bool:
+
+    run_hooks('pre', 'add')
+
     if len(args) == 0 or len(args) > 2:
         print("Command 'add' take 1 or 2 argument - file path, new file path!")
         return False
@@ -61,6 +65,9 @@ def add_file_helper(*args) -> bool:
     print('Success added to FS!')
 
     list_file_helper()
+    
+    run_hooks('post', 'add')
+
     return True
 
 

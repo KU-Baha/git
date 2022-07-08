@@ -6,5 +6,5 @@ commands_list = {
     'del': del_file.del_file_helper,
     'list': list_files.list_file,
     'init': init_fs.init_fs_helper,
-    'plugin': hook_helper,
+    'hook': hook_helper,
 }
