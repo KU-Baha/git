@@ -2,3 +2,4 @@
 venv/
 .zeon_git/
 __pycache__/
+commands/test.py
