@@ -1,7 +1,6 @@
 from commands.utils.database_helper import database_list, get_path
 from commands.utils.config import LIST_FILE_PATH
 from commands.utils.fs_helper import check_inited
-from commands.utils.hook_helper import run_hooks
 
 
 def list_file(*args) -> None:
@@ -18,9 +17,9 @@ def get_tree_dict(paths: list) -> dict:
 
     for path in paths:
         current_lvl = tree
-        directoryes = path.split('/')
+        directories = path.split('/')
 
-        for directory in directoryes:
+        for directory in directories:
 
             if directory not in current_lvl:
                 current_lvl[directory] = {}
@@ -38,9 +37,6 @@ def to_tree(d, c=0):
 
 
 def list_file_helper() -> bool:
-
-    run_hooks('pre', 'list')
-
     if not check_inited():
         print('FS not initiazlized!')
         return False
@@ -50,8 +46,6 @@ def list_file_helper() -> bool:
     nested_dict = get_tree_dict(paths)
     with open(LIST_FILE_PATH, 'w') as file:
         file.write('\n'.join(to_tree(nested_dict)))
-
-    run_hooks('post', 'list')
 
     return True
 

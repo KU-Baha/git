@@ -3,7 +3,6 @@ from pathlib import Path
 import os
 
 from commands.utils.config import *
-from commands.utils.hook_helper import run_hooks
 
 
 def init_fs(called_path: str) -> None:
@@ -21,8 +20,6 @@ def init_fs(called_path: str) -> None:
 
 
 def init_fs_helper(*args) -> bool:
-    run_hooks('pre', 'init')
-
     if len(args) != 0:
         print("Command 'init' doesn't take any arguments!")
         return False
@@ -35,8 +32,6 @@ def init_fs_helper(*args) -> bool:
         return False
 
     init_fs(called_path)
-
-    run_hooks('post', 'init')
 
     return True
 
