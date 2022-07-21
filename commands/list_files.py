@@ -38,7 +38,7 @@ def to_tree(d, c=0):
 
 def list_file_helper() -> bool:
     if not check_inited():
-        print('FS not initiazlized!')
+        print('FS not initialized!')
         return False
 
     database = database_list()[:-1]

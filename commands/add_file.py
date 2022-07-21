@@ -22,7 +22,7 @@ def add_file_helper(*args) -> bool:
         return False
 
     if not check_inited():
-        print('FS not initiazlized!')
+        print('FS not initialized!')
         return False
 
     called_path = os.getcwd()

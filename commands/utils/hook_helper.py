@@ -6,11 +6,12 @@ from pathlib import Path
 
 from commands.utils.config import BASE_FS_PATH
 
+commands_list = ['add', 'del', 'list', 'init']
+hooks_list = ['pre', 'post']
+
 
 def create_hook_structure() -> None:
     called_path = Path(os.getcwd())
-    commands_list = ['add', 'del', 'list', 'init']
-    hooks_list = ['pre', 'post']
 
     for command in commands_list:
         path = called_path / BASE_FS_PATH / 'hooks' / command
@@ -65,6 +66,9 @@ def wait_for(threads):
 
 
 def run_hooks(command: str, state: str) -> None:
+    if command not in commands_list:
+        return
+
     hooks = os.listdir(f'{BASE_FS_PATH}/hooks/{command}/{state}/')
 
     sorted_list = list(sorted(hooks, key=lambda x: x[1]))
