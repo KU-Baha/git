@@ -1,7 +1,7 @@
 from hashlib import sha1
 
-from .fs_helper import check_file
-from .config import *
+from commands.utils.fs_helper import check_file
+from commands.utils.config import *
 
 
 def hash_file(file_path: str) -> str:

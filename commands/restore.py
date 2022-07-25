@@ -3,7 +3,6 @@ import shutil
 from pathlib import Path
 
 from commands.utils.config import BASE_FS_PATH, BASE_FS_COPY
-from commands.utils.fs_helper import check_inited
 from commands.utils.hook_helper import create_hook_structure
 
 
@@ -15,10 +14,6 @@ def restore(backup_path: str):
 def restore_helper(*args):
     if len(args) != 1:
         print("Command 'backup' take 1 argument - backup_path!")
-        return False
-
-    if not check_inited():
-        print("FS not initialized!")
         return False
 
     backup_path = args[0]
