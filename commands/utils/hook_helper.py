@@ -4,7 +4,8 @@ import threading
 
 from pathlib import Path
 
-from commands.utils.config import BASE_FS_PATH
+from commands.utils.config import HOOKS_PATH
+from commands.utils.fs_helper import check_inited
 
 commands_list = ['add', 'del', 'list', 'init']
 hooks_list = ['pre', 'post']
@@ -14,7 +15,7 @@ def create_hook_structure() -> None:
     called_path = Path(os.getcwd())
 
     for command in commands_list:
-        path = called_path / BASE_FS_PATH / 'hooks' / command
+        path = called_path / HOOKS_PATH / command
         path.mkdir(parents=True, exist_ok=True)
 
         for hook in hooks_list:
@@ -24,7 +25,7 @@ def create_hook_structure() -> None:
 
 def run_hook(command, state, hook):
     try:
-        subprocess.Popen(f'python {BASE_FS_PATH}/hooks/{command}/{state}/{hook}', shell=True)
+        subprocess.Popen(f'python {HOOKS_PATH}/{command}/{state}/{hook}', shell=True)
     except subprocess.STD_ERROR_HANDLE:
         exit()
 
@@ -69,7 +70,14 @@ def run_hooks(command: str, state: str) -> None:
     if command not in commands_list:
         return
 
-    hooks = os.listdir(f'{BASE_FS_PATH}/hooks/{command}/{state}/')
+    if not check_inited():
+        return
+
+    if not Path(HOOKS_PATH).is_dir():
+        print("Hooks structure doesn't found!")
+        return
+
+    hooks = os.listdir(f'{HOOKS_PATH}/{command}/{state}/')
 
     sorted_list = list(sorted(hooks, key=lambda x: x[1]))
 

@@ -1,6 +1,5 @@
 from commands.utils.database_helper import database_list, get_path
 from commands.utils.config import LIST_FILE_PATH
-from commands.utils.fs_helper import check_inited
 
 
 def list_file(*args) -> None:
@@ -37,10 +36,6 @@ def to_tree(d, c=0):
 
 
 def list_file_helper() -> bool:
-    if not check_inited():
-        print('FS not initialized!')
-        return False
-
     database = database_list()[:-1]
     paths = get_path(database)
     nested_dict = get_tree_dict(paths)

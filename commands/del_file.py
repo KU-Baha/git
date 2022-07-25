@@ -3,7 +3,6 @@ import sys
 
 from commands.list_files import list_file_helper
 from commands.utils.database_helper import *
-from commands.utils.fs_helper import check_inited
 
 
 def del_file(file_path: str) -> None:
@@ -11,13 +10,8 @@ def del_file(file_path: str) -> None:
 
 
 def del_file_helper(*args) -> bool:
-
     if len(args) != 1:
         print("Command 'del' take 1 argument - file path!")
-        return False
-
-    if not check_inited():
-        print('FS not initialized!')
         return False
 
     file_path = args[0]
