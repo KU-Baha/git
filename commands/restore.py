@@ -8,19 +8,19 @@ from commands.utils.hook_helper import create_hook_structure
 
 def restore(backup_path: str):
     with zipfile.ZipFile(backup_path) as my_zip:
-        my_zip.extractall('.')
+        my_zip.extractall(BASE_FS_PATH)
 
 
-def restore_helper(*args):
+def restore_helper(*args) -> None:
     if len(args) != 1:
         print("Command 'backup' take 1 argument - backup_path!")
-        return False
+        return
 
     backup_path = args[0]
 
     if not zipfile.is_zipfile(backup_path):
         print("File not found!")
-        return False
+        return
 
     shutil.copytree(BASE_FS_PATH, BASE_FS_COPY, dirs_exist_ok=True)
 
@@ -34,4 +34,4 @@ def restore_helper(*args):
 
     shutil.rmtree(BASE_FS_COPY, ignore_errors=True)
 
-    create_hook_structure()
+    # create_hook_structure()

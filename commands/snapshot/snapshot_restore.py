@@ -1,10 +1,10 @@
 import zipfile
 from pathlib import Path
 
+from commands.snapshot.snapshot_db import snapshot_check_in_db, snapshot_get_database
 from commands.snapshot.snapshot_helper import del_intermediate_dir, move_to_intermediate_dir, \
     move_back_from_intermediate_dir
-from commands.utils.config import BASE_FS_PATH, SNAPSHOT_DIR_IN_INTERMEDIATE_DIR, SNAPSHOT_INTERMEDIATE_DIR
-from commands.utils.fs_helper import check_file
+from commands.utils.config import BASE_FS_PATH, SNAPSHOT_INTERMEDIATE_DIR, SNAPSHOT_DIR_IN_INTERMEDIATE_DIR
 
 
 def snapshot_restore(snapshot_path: str):
@@ -24,7 +24,9 @@ def snapshot_restore_helper(*args):
 
     snapshot_path = f'{SNAPSHOT_DIR_IN_INTERMEDIATE_DIR}/{snapshot_hash}.zip'
 
-    if not check_file(snapshot_path):
+    database = snapshot_get_database()
+
+    if not snapshot_check_in_db(snapshot_hash, database):
         print("Snapshot not found!")
         return
 
@@ -33,6 +35,7 @@ def snapshot_restore_helper(*args):
     snapshot_restore(snapshot_path)
 
     move_back_from_intermediate_dir()
+
     del_intermediate_dir()
 
     print('Snapshot success restore!')

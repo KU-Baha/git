@@ -3,7 +3,7 @@ from commands.snapshot.snapshot_commads import commands_list
 
 def snapshot(*args):
     if len(args) <= 0:
-        print('Write snapshot command!')
+        print("Write snapshot command! - Write command 'help'")
         return
 
     command, *args = args

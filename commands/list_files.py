@@ -1,5 +1,5 @@
 from commands.utils.database_helper import database_list, get_path
-from commands.utils.config import LIST_FILE_PATH
+from commands.utils.config import LIST_FILE_PATH, LIST_FILE_NAME
 
 
 def list_file(*args) -> None:
@@ -35,11 +35,16 @@ def to_tree(d, c=0):
         yield from ([] if b is None else to_tree(b, c + 1))
 
 
-def list_file_helper() -> bool:
+def list_file_helper(base_dir=None) -> bool:
+    list_path = LIST_FILE_PATH
+
+    if base_dir:
+        list_path = f"{base_dir}/{LIST_FILE_NAME}"
+
     database = database_list()[:-1]
     paths = get_path(database)
     nested_dict = get_tree_dict(paths)
-    with open(LIST_FILE_PATH, 'w') as file:
+    with open(list_path, 'w') as file:
         file.write('\n'.join(to_tree(nested_dict)))
 
     return True

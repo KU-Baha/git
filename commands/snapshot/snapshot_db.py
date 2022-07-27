@@ -17,6 +17,7 @@ def snapshot_check_in_db(snapshot_hash: str, database: list) -> tuple:
             continue
 
         snapshot_hash_in_db = line.split(',')[2]
+
         if snapshot_hash == snapshot_hash_in_db:
             return index, line
     return ()

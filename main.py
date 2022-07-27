@@ -8,13 +8,13 @@ def main():
     argv = sys.argv
 
     if len(argv) <= 1:
-        print("Write command!")
+        print("Write command! \nIf you don't know commands you can write command 'help'")
         return
 
     _, command, *args = argv
 
     if command not in commands_list:
-        print("Command not found!")
+        print("Command not found! \nIf you don't know commands you can write command 'help'")
         return
 
     if not check_inited() and command != 'init':
