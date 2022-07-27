@@ -9,7 +9,7 @@ def snapshot(*args):
     command, *args = args
 
     if command not in commands_list:
-        print("Snapshot command not found!")
+        print("Snapshot command not found! - Write command 'help'")
         return
 
     commands_list[command](*args)

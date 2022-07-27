@@ -12,11 +12,16 @@ def hash_file(file_path: str) -> str:
         return sha1(file.read()).hexdigest()
 
 
-def database_list() -> list:
-    if not check_file(DATABASE_PATH):
+def database_list(database=None) -> list:
+    database_path = DATABASE_PATH
+
+    if database:
+        database_path = database
+
+    if not check_file(database_path):
         return []
 
-    with open(DATABASE_PATH, "r") as file:
+    with open(database_path, "r") as file:
         return file.read().split('\n')
 
 
