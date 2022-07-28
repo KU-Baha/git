@@ -9,14 +9,18 @@ from commands.utils.fs_helper import check_file
 from commands.list_files import list_file_helper
 
 
-def add_file(file_from: str, file_hash: str):
-    file_to = os.path.join(FS_OBJECTS, file_hash)
+def add_file(file_from: str, file_hash: str, object_path=None):
+    dir_path = FS_OBJECTS
+
+    if object_path:
+        dir_path = object_path
+
+    file_to = os.path.join(dir_path, file_hash)
 
     shutil.copyfile(file_from, file_to)
 
 
 def add_file_helper(*args) -> bool:
-
     if len(args) == 0 or len(args) > 2:
         print("Command 'add' take 1 or 2 argument - file path, new file path!")
         return False

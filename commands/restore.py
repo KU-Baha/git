@@ -3,12 +3,11 @@ import shutil
 from pathlib import Path
 
 from commands.utils.config import BASE_FS_PATH, BASE_FS_COPY
-from commands.utils.hook_helper import create_hook_structure
 
 
-def restore(backup_path: str):
+def restore(backup_path: str, extract_dir):
     with zipfile.ZipFile(backup_path) as my_zip:
-        my_zip.extractall(BASE_FS_PATH)
+        my_zip.extractall(extract_dir)
 
 
 def restore_helper(*args) -> None:
@@ -26,7 +25,7 @@ def restore_helper(*args) -> None:
 
     shutil.rmtree(BASE_FS_PATH, ignore_errors=True)
 
-    restore(backup_path)
+    restore(backup_path, BASE_FS_PATH)
 
     if not Path(BASE_FS_PATH).is_dir():
         print("Error with restore!")
