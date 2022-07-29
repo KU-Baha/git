@@ -14,7 +14,7 @@ def snapshot_restore(snapshot_path: str):
 
 def snapshot_restore_helper(*args):
     if len(args) != 1:
-        print("Command 'snapshot create' take one argument! - 'snapshot' argument!")
+        print("Command 'snapshot restore' take one argument! - 'snapshot' argument!")
         return False
 
     snapshot_hash = args[0]

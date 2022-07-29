@@ -41,9 +41,13 @@ def commit_helper(*args) -> None:
 
     if not get_data_by_key(d_file_hash, database):
         file_path_in_fs = os.path.join(INTERMEDIATE_OBJECTS, d_file_hash)
+        old_file_in_fs = os.path.join(INTERMEDIATE_OBJECTS, file_path)
 
         if check_file(file_path_in_fs):
             del_file(file_path_in_fs)
+
+        if check_file(old_file_in_fs):
+            del_file(old_file_in_fs)
 
     file_hash = hash_file(file_path)
 
