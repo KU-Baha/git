@@ -12,11 +12,16 @@ def hash_file(file_path: str) -> str:
         return sha1(file.read()).hexdigest()
 
 
-def database_list() -> list:
-    if not check_file(DATABASE_PATH):
+def database_list(inter_database_path=None) -> list:
+    database_path = DATABASE_PATH
+
+    if inter_database_path:
+        database_path = inter_database_path
+
+    if not check_file(database_path):
         return []
 
-    with open(DATABASE_PATH, "r") as file:
+    with open(database_path, "r") as file:
         return file.read().split('\n')
 
 
@@ -52,18 +57,28 @@ def check_in_database(path: str, database: list) -> tuple:
     return ()
 
 
-def add_to_database(new_file_hash: str, new_file_path: str, database: list) -> bool:
+def add_to_database(new_file_hash: str, new_file_path: str, database: list, inter_database_path: str = None) -> bool:
+    database_path = DATABASE_PATH
+
+    if inter_database_path:
+        database_path = inter_database_path
+
     if check_in_database(new_file_path, database):
         return False
 
-    with open(DATABASE_PATH, 'w') as file:
+    with open(database_path, 'w') as file:
         file.write('\n'.join(database))
         file.write(f"{new_file_hash},/{new_file_path.lstrip('/')}\n")
 
     return True
 
 
-def delete_from_database(file_path: str, database: list) -> tuple:
+def delete_from_database(file_path: str, database: list, inter_database_path: str = None) -> tuple:
+    database_path = DATABASE_PATH
+
+    if inter_database_path:
+        database_path = inter_database_path
+
     data = check_in_database(file_path, database)
 
     if not data:
@@ -71,7 +86,7 @@ def delete_from_database(file_path: str, database: list) -> tuple:
 
     del database[data[0]]
 
-    with open(DATABASE_PATH, 'w') as file:
+    with open(database_path, 'w') as file:
         file.write('\n'.join(database))
 
     return data[1]

@@ -3,13 +3,13 @@ from commands.snapshot.snapshot_commads import commands_list
 
 def snapshot(*args):
     if len(args) <= 0:
-        print('Write snapshot command!')
+        print("Write snapshot command! - Write command 'help'")
         return
 
     command, *args = args
 
     if command not in commands_list:
-        print("Snapshot command not found!")
+        print("Snapshot command not found! - Write command 'help'")
         return
 
     commands_list[command](*args)
