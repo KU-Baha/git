@@ -35,6 +35,7 @@ def commit_helper(*args) -> None:
 
     if not data:
         print("File not found in snapshot!")
+        del_intermediate_dir()
         return
 
     d_file_hash, d_file_path = data
@@ -53,6 +54,7 @@ def commit_helper(*args) -> None:
 
     if not add_to_database(file_hash, file_in_snapshot, database, INTERMEDIATE_DATABASE):
         print("File already exists in database!")
+        del_intermediate_dir()
         return
 
     add_file(file_path, file_hash, INTERMEDIATE_OBJECTS)
